@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sokoly Systems</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #ffffff;
+        }
+        header {
+            background-color: #1e1e1e;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+        .logo {
+            height: 110%;
+            width: auto;
+            max-width: 200px;
+            filter: invert(1);
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+        main {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: calc(100vh - 80px);
+        }
+        h1 {
+            margin-top: 20vh; /* Adjust this value to set the vertical position */
+            margin-bottom: 20px;
+        }
+        .quote-container {
+            min-height: 100px;
+            text-align: left;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #quote {
+            display: inline-block;
+            font-size: 1.2em;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            opacity: 1;
+            transition: opacity 0.3s ease-out;
+            width: 100%;
+        }
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background-color: #ffffff;
+            margin-left: 2px;
+            animation: blink 0.7s infinite;
+            vertical-align: middle;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        /* Removed #cursor style */
+    </style>
+</head>
+<body>
+    <header>
+        <img src="Assets/logo.svg" alt="Sokoly Systems Inc." class="logo">
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Coming Soon</h1>
+        <div class="quote-container">
+            <span id="quote"></span>
+        </div>
+    </main>
+
+    <script>
+        const quotes = [
+            "The mighty bird will take its first flight, on the back of its great Cecero, filling the universe with wonder, filling all the writings with its fame, and bringing eternal glory to the nest where it was born.",
+            "Piglierà il primo volo il grande uccello, sopra del dosso del suo magno Cècero, empiendo l'universo di stupore, empiendo di sua fama tutte le scritture, e groria etterna al nido dove nacque.",
+            "Могутній птах здійснить свій перший політ над спиною свого могутнього Цезаревого горба, наповнюючи всесвіт захопленням, поширюючи свою славу у всіх писаннях і приносячи вічну славу гнізду, де він народився."
+        ];
+        let currentQuote = 0;
+        let i = 0;
+        const quoteElement = document.getElementById('quote');
+
+        function typeWriter() {
+            if (i < quotes[currentQuote].length) {
+                quoteElement.innerHTML = quotes[currentQuote].substring(0, i + 1) + '<span style="opacity: 0;">' + quotes[currentQuote].substring(i + 1) + '</span><span class="cursor"></span>';
+                i++;
+                setTimeout(typeWriter, 10); // Increased typing speed (reduced delay from 20ms to 10ms)
+            } else {
+                quoteElement.innerHTML = quotes[currentQuote] + '<span class="cursor"></span>';
+                setTimeout(dissolveText, 3500);
+            }
+        }
+
+        function dissolveText() {
+            quoteElement.style.opacity = '0';
+            setTimeout(() => {
+                quoteElement.innerHTML = '';
+                currentQuote = (currentQuote + 1) % quotes.length;
+                i = 0;
+                quoteElement.style.opacity = '1';
+                setTimeout(typeWriter, 200);
+            }, 300);
+        }
+
+        typeWriter();
+    </script>
+</body>
+</html>
